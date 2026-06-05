@@ -1,0 +1,444 @@
+/**
+ * SnapFetch application styles.
+ * Organization: layout (.app) → form (.url-form) → preview (.preview)
+ * → buttons (.dl-btn) → badges (.badge).
+ */
+
+/* ---------- General layout ---------- */
+.app {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  text-align: center;
+}
+
+/* Top bar: language switcher + GitHub button, aligned to the right. */
+.app__topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Segmented language switcher (EN / FR). */
+.lang-switch {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.lang-switch__btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.lang-switch__btn:hover:not(.lang-switch__btn--active) {
+  color: var(--text-h);
+}
+.lang-switch__btn--active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* "Star the project" button + counter. */
+.gh-star {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
+}
+.gh-star:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 4px var(--accent-bg);
+}
+.gh-star__logo {
+  flex-shrink: 0;
+}
+.gh-star__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.app__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app__logo {
+  font-size: 52px;
+  letter-spacing: -1.6px;
+}
+.app__logo span {
+  color: var(--accent);
+}
+@media (max-width: 1024px) {
+  .app__logo {
+    font-size: 38px;
+  }
+}
+
+.app__tagline {
+  color: var(--text);
+  font-size: 18px;
+}
+
+/* "Download a new video" button, below the preview. */
+.app__reset {
+  align-self: center;
+  margin-top: -8px; /* tighten the gap with the preview (.app gap) */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-h);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
+}
+.app__reset::before {
+  content: "↻";
+  font-size: 17px;
+  line-height: 1;
+}
+.app__reset:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 4px var(--accent-bg);
+}
+.app__reset:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.app__error {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  text-align: left;
+}
+
+.app__footer {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+/* ---------- Formulaire d'URL ---------- */
+.url-form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+@media (max-width: 560px) {
+  .url-form {
+    flex-direction: column;
+  }
+}
+
+.url-form__field {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.url-form__input {
+  width: 100%;
+  padding: 16px 110px 16px 18px;
+  font-size: 16px;
+  font-family: var(--sans);
+  color: var(--text-h);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.url-form__input:focus {
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 4px var(--accent-bg);
+}
+.url-form__input::placeholder {
+  color: var(--text);
+  opacity: 0.7;
+}
+
+/* The platform badge floats inside the field, on the right. */
+.url-form__field .badge {
+  position: absolute;
+  right: 12px;
+}
+
+.url-form__submit {
+  padding: 16px 26px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.15s;
+}
+.url-form__submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.url-form__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Preview card ---------- */
+.preview {
+  display: flex;
+  gap: 20px;
+  text-align: left;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+@media (max-width: 560px) {
+  .preview {
+    flex-direction: column;
+  }
+}
+
+.preview__thumb {
+  position: relative;
+  flex: 0 0 200px;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+.preview__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.preview__thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent-bg), transparent);
+}
+.preview__duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 6px;
+}
+
+.preview__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.preview__title {
+  font-size: 20px;
+  line-height: 1.3;
+  /* Cleanly truncate very long titles to 2 lines. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.preview__author {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.preview__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* On mobile: two buttons side by side, equal width (instead of stacked). */
+@media (max-width: 560px) {
+  .preview__actions .dl-btn {
+    flex: 1 1 0; /* each button takes half the row */
+    min-width: 0; /* lift the min-width that forced wrapping */
+    padding-inline: 12px;
+  }
+  /* Centered content + label allowed to wrap to two lines (reduced space). */
+  .preview__actions .dl-btn__content {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* ---------- Download buttons ---------- */
+.dl-btn {
+  position: relative; /* containing block for the .dl-btn__fill progress bar */
+  overflow: hidden;
+  display: flex;
+  padding: 10px 18px;
+  min-width: 190px; /* avoids any width jump when switching to progress mode */
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: transform 0.1s, opacity 0.15s;
+}
+.dl-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.dl-btn:disabled {
+  cursor: not-allowed;
+}
+/* An inactive but disabled button (the other one is downloading) is just dimmed. */
+.dl-btn:disabled:not(.dl-btn--active) {
+  opacity: 0.5;
+}
+.dl-btn--primary {
+  background: var(--accent);
+  color: #fff;
+}
+.dl-btn--secondary {
+  background: transparent;
+  color: var(--text-h);
+  border-color: var(--border);
+}
+
+/* Text content, placed above the progress bar. */
+.dl-btn__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.dl-btn__label {
+  font-size: 15px;
+  font-weight: 600;
+}
+.dl-btn__meta {
+  font-size: 12px;
+  font-family: var(--mono);
+  opacity: 0.85;
+}
+
+/* Progress bar: horizontal fill behind the text. */
+.dl-btn__fill {
+  position: absolute;
+  inset: 0 auto 0 0; /* pinned to the left, full height */
+  width: 0;
+  z-index: 0;
+  transition: width 0.25s ease;
+}
+.dl-btn--primary .dl-btn__fill {
+  background: rgba(255, 255, 255, 0.28);
+}
+.dl-btn--secondary .dl-btn__fill {
+  background: var(--accent-bg);
+}
+
+/* "Preparing" phase: animated stripes covering the whole button (indeterminate). */
+.dl-btn__fill--indeterminate {
+  width: 100% !important;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.22) 0,
+    rgba(255, 255, 255, 0.22) 12px,
+    rgba(255, 255, 255, 0.08) 12px,
+    rgba(255, 255, 255, 0.08) 24px
+  );
+  background-size: 48px 48px;
+  animation: dl-stripes 1s linear infinite;
+}
+.dl-btn--secondary .dl-btn__fill--indeterminate {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--accent-bg) 0,
+    var(--accent-bg) 12px,
+    transparent 12px,
+    transparent 24px
+  );
+}
+@keyframes dl-stripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 48px 0;
+  }
+}
+
+/* ---------- Badges de plateforme ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  color: #fff;
+  white-space: nowrap;
+  width: fit-content;
+}
+.badge--tiktok {
+  background: #010101;
+}
+.badge--twitter {
+  background: #1d9bf0;
+}
+.badge--instagram {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
+}
+.badge--youtube {
+  background: #ff0000;
+}

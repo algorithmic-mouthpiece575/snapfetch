@@ -1,0 +1,17 @@
+{
+  "name": "snapfetch",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SnapFetch — plateforme de téléchargement de médias (TikTok, Twitter/X, Instagram, YouTube)",
+  "scripts": {
+    "dev": "concurrently -n server,client -c magenta,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix server run build && npm --prefix client run build",
+    "lint": "npm --prefix server run lint && npm --prefix client run lint",
+    "install:all": "npm --prefix server install && npm --prefix client install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

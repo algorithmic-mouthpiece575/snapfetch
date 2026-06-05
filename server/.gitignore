@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+*.log
+tmp/
+# Cookies and other secrets — NEVER commit (except the explanatory README).
+secrets/*
+!secrets/README.md
+*.cookies.txt
