@@ -4,10 +4,10 @@ services:
     restart: unless-stopped
     env_file: ./server/.env
     environment:
-      - PORT=3001
+      - PORT=3007
     # Bind to localhost only: the host's nginx reverse-proxies to it.
     ports:
-      - "127.0.0.1:3001:3001"
+      - "127.0.0.1:3007:3007"
     volumes:
       # Cookies, read-only (path = YTDLP_COOKIES_FILE relative to /app)
       - ./server/secrets:/app/secrets:ro

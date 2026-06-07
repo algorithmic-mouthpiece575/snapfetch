@@ -20,6 +20,6 @@ COPY . .
 RUN npm run build
 
 ENV NODE_ENV=production
-# The server reads PORT from the environment (defaults to 3001)
-EXPOSE 3001
+# The server reads PORT from the environment (set to 3007 by docker-compose)
+EXPOSE 3007
 CMD ["node", "dist/index.js"]

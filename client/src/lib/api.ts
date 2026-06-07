@@ -8,22 +8,23 @@
 import type { ApiError, MediaInfo } from "../types/media";
 
 /**
- * API base for lightweight requests (resolution). In dev, Vite proxies `/api`
- * to the backend (see vite.config.ts), so a relative base is enough.
+ * Backend origin for ALL API calls.
+ *
+ * - Empty → relative `/api` URLs. Use this when the frontend and backend share
+ *   the same origin (dev via the Vite proxy, or prod behind a single reverse
+ *   proxy).
+ * - Set `VITE_API_ORIGIN` to the backend origin (e.g.
+ *   `https://snapfetch-server.duckdns.org`) when they live on different domains,
+ *   so every request targets the backend directly. CORS must allow the frontend
+ *   origin (`CLIENT_ORIGIN` on the server).
+ *
+ * Going direct also avoids the dev proxy dropping long download connections
+ * (502) while the server prepares a large file.
  */
-const API_BASE = "/api";
+const API_ORIGIN: string = import.meta.env.VITE_API_ORIGIN ?? "";
 
-/**
- * Backend origin for DOWNLOADS (large files).
- *
- * We deliberately bypass the Vite proxy for downloads: the dev proxy drops the
- * connection (502) when the server takes a while to prepare a large file.
- * Hitting the backend directly keeps the connection alive.
- *
- * - In dev: set by `VITE_API_ORIGIN` (e.g. http://localhost:3001).
- * - In prod (same origin behind Caddy): left empty → relative URL.
- */
-const DOWNLOAD_ORIGIN: string = import.meta.env.VITE_API_ORIGIN ?? "";
+/** Base for every API call. */
+const API_BASE = `${API_ORIGIN}/api`;
 
 /** Client-side application error carrying the `code` returned by the API. */
 export class ApiRequestError extends Error {
@@ -102,7 +103,7 @@ export async function downloadMedia(
   handlers.onPhase?.("preparing");
 
   const params = new URLSearchParams({ url, formatId, filename });
-  const href = `${DOWNLOAD_ORIGIN}${API_BASE}/download?${params.toString()}`;
+  const href = `${API_BASE}/download?${params.toString()}`;
 
   // Awaiting this promise covers the entire server-side preparation.
   const res = await fetch(href);

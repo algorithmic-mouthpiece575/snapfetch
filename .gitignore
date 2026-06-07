@@ -1,0 +1,30 @@
+# ---- Dependencies ----
+node_modules/
+
+# ---- Build output ----
+dist/
+build/
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+
+# ---- Temporary files ----
+tmp/
+
+# ---- Environment files with secrets — NEVER commit ----
+# (committed on purpose: server/.env.example, client/.env.development,
+#  and client/.env.production — VITE_* values are public, in the bundle)
+.env
+.env.local
+.env.*.local
+.env.production
+!client/.env.production
+
+# ---- yt-dlp cookies / secrets — NEVER commit ----
+*.cookies.txt
+cookies.txt
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
