@@ -11,3 +11,10 @@ services:
     volumes:
       # Cookies, read-only (path = YTDLP_COOKIES_FILE relative to /app)
       - ./server/secrets:/app/secrets:ro
+
+  client:
+    build: ./client
+    restart: unless-stopped
+    # Static frontend served on 3008, localhost-only: the host nginx proxies it.
+    ports:
+      - "127.0.0.1:3008:3008"
